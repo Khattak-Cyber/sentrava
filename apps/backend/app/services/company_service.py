@@ -1,0 +1,22 @@
+from sqlalchemy.orm import Session
+
+from app.models.company import Company
+from app.schemas.company import CompanyCreate
+
+
+def create_company(db: Session, company: CompanyCreate):
+    new_company = Company(
+        name=company.name,
+        email=company.email,
+        industry=company.industry
+    )
+
+    db.add(new_company)
+    db.commit()
+    db.refresh(new_company)
+
+    return new_company
+
+
+def get_companies(db: Session):
+    return db.query(Company).all()

@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+from app.api.company import router as company_router
+
+app = FastAPI(title="Sentrava API")
+
+app.include_router(company_router)
+
 
 @app.get("/")
-def home():
-    return {
-        "name": "Sentrava API",
-        "version": "1.0.0",
-        "status": "running"
-    }
+def root():
+    return {"message": "Welcome to Sentrava API"}
